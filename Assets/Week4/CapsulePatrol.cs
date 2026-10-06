@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
+
+[RequireComponent(typeof(NavMeshAgent))]
 public class CapsulePatrol : MonoBehaviour
 {
-    private NavMeshAgent agent;
+     private NavMeshAgent agent;
     [SerializeField] private Transform[] waypoints;
     private int currentWaypointIndex = -1;
 
@@ -30,5 +32,4 @@ public class CapsulePatrol : MonoBehaviour
         currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
         agent.SetDestination(waypoints[currentWaypointIndex].position);
     }
-
 }
