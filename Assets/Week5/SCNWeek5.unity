@@ -675,7 +675,8 @@ GameObject:
   - component: {fileID: 343691995}
   - component: {fileID: 343691994}
   - component: {fileID: 343691999}
-  - component: {fileID: 343691998}
+  - component: {fileID: 343692001}
+  - component: {fileID: 343692000}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -778,22 +779,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &343691998
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 343691993}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb39c1e2e8313e648b36496c73e2fb41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::W5EnemyMove
-  player: {fileID: 0}
-  agent: {fileID: 0}
-  patrolpoints: []
-  speed: 3
 --- !u!195 &343691999
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -816,6 +801,50 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &343692000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343691993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b46bf569e76fc4bb11da1c345cde9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyPatrol
+  m_Waypoints:
+  - {fileID: 2008912374}
+  - {fileID: 1719856711}
+  - {fileID: 1646809663}
+  - {fileID: 991467505}
+  - {fileID: 684145967}
+  - {fileID: 2015335988}
+  - {fileID: 1362168599}
+  - {fileID: 1024838438}
+  - {fileID: 1030597795}
+  - {fileID: 902011012}
+  - {fileID: 1261764511}
+  m_ArrivalDistance: 0.5
+  m_WaitTime: 2
+--- !u!114 &343692001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343691993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5289a69a06fd94f92fc36d45baee95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyBrain
+  m_PatrolState: {fileID: 11400000, guid: 763cfe3cbfae1994c8cb980999473225, type: 2}
+  m_AlertState: {fileID: 11400000, guid: 2fa52696f3ba8da47b4ec1b1d5e96a68, type: 2}
+  m_AttackState: {fileID: 11400000, guid: 5f5013c1a0e3e5643bef7841092b415c, type: 2}
+  m_Target: {fileID: 255431397}
+  m_Agent: {fileID: 343691999}
+  m_PatrolSettings: {fileID: 343692000}
 --- !u!1 &684145966
 GameObject:
   m_ObjectHideFlags: 0
@@ -1863,6 +1892,7 @@ GameObject:
   - component: {fileID: 2132342702}
   - component: {fileID: 2132342701}
   - component: {fileID: 2132342700}
+  - component: {fileID: 2132342703}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1911,7 +1941,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 50.4
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1937,21 +1967,65 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2132342699}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.56365573, y: 0, z: 0, w: 0.8260098}
+  m_LocalPosition: {x: -5.4225483, y: 24.71348, z: -0.7589158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 68.618, y: 0, z: 0}
+--- !u!114 &2132342703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2132342699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2132342702}
   - {fileID: 140932622}
+  - {fileID: 1050097207}
   - {fileID: 802417555}
   - {fileID: 255431397}
   - {fileID: 343691997}
   - {fileID: 152341257}
-  - {fileID: 1050097207}
