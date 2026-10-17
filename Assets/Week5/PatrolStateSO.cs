@@ -4,8 +4,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "AI/States/Patrol")]
 public class PatrolStateSO : EnemyStateSO
 {
-    [Header("Detection")]
-    [SerializeField] private float m_DetectionRadius = 8f;
+    // [Header("Detection")]
+    // [SerializeField] private float m_DetectionRadius = 8f;
+    //[SerializeField, Range(0f, 360f)] private float m_FieldOfView = 90f;
+
+    //public float DetectionRadius => m_DetectionRadius;
+    //public float FieldOfView => m_FieldOfView;
 
     public override void Enter(EnemyBrain brain)
     {
@@ -14,21 +18,37 @@ public class PatrolStateSO : EnemyStateSO
 
     public override void Tick(EnemyBrain brain)
     {
-        if (brain.Target != null)
-        {
-            float distance = Vector3.Distance(
-                brain.transform.position,
-                brain.Target.position);
+        // if (brain.Target != null)
+        // {
+        //     Vector3 toTarget = brain.Target.position - brain.transform.position;
+        //     if (toTarget.sqrMagnitude <= m_DetectionRadius * m_DetectionRadius 
+        //     //&& IsWithinFieldOfView(brain.transform, toTarget)
+        //     )
+        //     {
+        //         brain.Alert();
+        //         return;
+        //     }
+        // }
 
-            if (distance <= m_DetectionRadius)
-            {
-                brain.Alert();
-                return;
-            }
+        if (brain.IsTargetInFOV(brain.Target))
+        {
+            brain.Alert();
+            return;
         }
 
         brain.PatrolSettings.PatrolStep(brain.Agent);
     }
+
+    // private bool IsWithinFieldOfView(Transform observer, Vector3 toTarget)
+    // {
+    //     Vector3 direction = Vector3.ProjectOnPlane(toTarget, Vector3.up);
+    //     Vector3 forward = Vector3.ProjectOnPlane(observer.forward, Vector3.up);
+
+    //     if (direction.sqrMagnitude < Mathf.Epsilon || forward.sqrMagnitude < Mathf.Epsilon)
+    //         return true;
+
+    //     return Vector3.Angle(forward, direction) <= m_FieldOfView * 0.5f;
+    // }
 
     public override void Exit(EnemyBrain brain)
     {

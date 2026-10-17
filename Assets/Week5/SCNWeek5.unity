@@ -426,7 +426,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -450,7 +450,7 @@ GameObject:
   - component: {fileID: 300450564}
   - component: {fileID: 300450563}
   - component: {fileID: 300450562}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 337777858}
   - component: {fileID: 337777857}
   - component: {fileID: 337777856}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -845,6 +845,11 @@ MonoBehaviour:
   m_Target: {fileID: 255431397}
   m_Agent: {fileID: 343691999}
   m_PatrolSettings: {fileID: 343692000}
+  m_FieldOfView: 60
+  m_DetectionRadius: 10
+  m_ObstacleMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &684145966
 GameObject:
   m_ObjectHideFlags: 0
@@ -1259,7 +1264,7 @@ GameObject:
   - component: {fileID: 1078997453}
   - component: {fileID: 1078997452}
   - component: {fileID: 1078997451}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1402,7 +1407,7 @@ GameObject:
   - component: {fileID: 1349992090}
   - component: {fileID: 1349992089}
   - component: {fileID: 1349992088}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1545,7 +1550,7 @@ GameObject:
   - component: {fileID: 1488234427}
   - component: {fileID: 1488234426}
   - component: {fileID: 1488234425}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1657,7 +1662,7 @@ GameObject:
   - component: {fileID: 1533967123}
   - component: {fileID: 1533967122}
   - component: {fileID: 1533967121}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
