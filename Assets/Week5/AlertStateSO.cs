@@ -25,7 +25,24 @@ public class AlertStateSO : EnemyStateSO
             ? brain.InvestigationPosition
             : brain.LastKnownPosition;
 
-        agent.SetDestination(destination);
+        if (!agent.isOnNavMesh)
+        {
+            Debug.LogError(
+                $"{brain.name}: Enemy is not on the NavMesh.", brain);
+            return;
+        }
+
+        if (!agent.SetDestination(destination))
+        {
+            Debug.LogWarning(
+                $"{brain.name}: Failed to set investigation destination: " +
+                $"{destination}", brain);
+        }
+        else
+        {
+            Debug.Log(
+                $"{brain.name}: Investigating noise at {destination}", brain);
+        }
     }
 
     public override void Tick(EnemyBrain brain)

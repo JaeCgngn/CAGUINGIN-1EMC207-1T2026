@@ -23,9 +23,6 @@ public class EnemyBrain : MonoBehaviour
     [Header("Vision")]
     [SerializeField] private EnemyVision m_Vision;
 
-    [Header("Hearing")]
-    [SerializeField] private EnemyHearing m_EnemyHearing;
-
     private EnemyPatrolRoute m_PatrolRoute;
     private EnemyStateSO m_CurrentState;
 
@@ -68,12 +65,14 @@ public class EnemyBrain : MonoBehaviour
         if (m_Vision == null)
             m_Vision = GetComponent<EnemyVision>();
 
+
+
         m_PatrolRoute = FindFirstObjectByType<EnemyPatrolRoute>();
 
         if (m_Agent == null ||
-            m_PatrolSettings == null ||
-            m_PatrolRoute == null ||
-            m_Vision == null)
+     m_PatrolSettings == null ||
+     m_PatrolRoute == null ||
+     m_Vision == null)
         {
             Debug.LogError(
                 $"{name}: Missing NavMeshAgent, EnemyPatrol, " +

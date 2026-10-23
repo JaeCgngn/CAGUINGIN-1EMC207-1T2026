@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using TMPro;
 
 public class ObjectiveInteractable : MonoBehaviour, IInteractable
 {
@@ -15,6 +16,11 @@ public class ObjectiveInteractable : MonoBehaviour, IInteractable
     [SerializeField] private float m_NoiseInterval = 2f;
     [SerializeField] private float m_NoiseRadius = 10f;
 
+    [Header("World Space Prompt")]
+    [SerializeField] private GameObject m_PromptRoot;
+    [SerializeField] private TMP_Text m_PromptText;
+
+
     private float m_Progress;
     private float m_NoiseTimer;
     private bool m_IsComplete;
@@ -22,6 +28,12 @@ public class ObjectiveInteractable : MonoBehaviour, IInteractable
     public string ObjectiveName => m_ObjectiveName;
     public float Progress => m_Progress / m_InteractionDuration;
     public bool IsComplete => m_IsComplete;
+
+    private void Awake()
+    {
+        if (m_PromptRoot != null)
+            m_PromptRoot.SetActive(false);
+    }
 
     private void Start()
     {
@@ -65,23 +77,34 @@ public class ObjectiveInteractable : MonoBehaviour, IInteractable
             CompleteObjective();
     }
 
+
     private void EmitNoise()
     {
-        Collider[] hits = Physics.OverlapSphere(
-            transform.position,
-            m_NoiseRadius,
-            Physics.DefaultRaycastLayers,
-            QueryTriggerInteraction.Ignore);
+        EnemyHearing[] enemies =
+            FindObjectsByType<EnemyHearing>(
+                FindObjectsSortMode.None);
 
-        foreach (Collider hit in hits)
+        foreach (EnemyHearing enemy in enemies)
         {
-            EnemyHearing hearing =
-                hit.GetComponentInParent<EnemyHearing>();
+            if (enemy == null || !enemy.isActiveAndEnabled)
+                continue;
 
-            if (hearing != null)
-                hearing.HearNoise(transform.position);
+            float distance = Vector3.Distance(
+                transform.position,
+                enemy.transform.position);
+
+            Debug.Log(
+                $"Noise check: {enemy.name}, " +
+                $"Distance: {distance:F1}, " +
+                $"Objective radius: {m_NoiseRadius}");
+
+            if (distance <= m_NoiseRadius)
+            {
+                enemy.HearNoise(transform.position);
+            }
         }
     }
+
 
     private void CompleteObjective()
     {
@@ -91,6 +114,28 @@ public class ObjectiveInteractable : MonoBehaviour, IInteractable
             ObjectiveManager.Instance.CompleteObjective(m_IsRequired);
 
         Debug.Log($"{m_ObjectiveName} completed!");
+    }
+
+    public void SetPromptVisible(bool visible)
+    {
+        if (m_PromptRoot != null)
+            m_PromptRoot.SetActive(visible && !m_IsComplete);
+    }
+
+    public void UpdatePrompt(bool isInteracting)
+    {
+        if (m_PromptText == null)
+            return;
+
+        if (m_IsComplete)
+        {
+            m_PromptText.text = $"{m_ObjectiveName} - Complete";
+            return;
+        }
+
+        m_PromptText.text = isInteracting
+            ? $"Working... {Progress * 100f:0}%"
+            : $"Hold E - {m_ObjectiveName}";
     }
 
     private void OnDrawGizmosSelected()

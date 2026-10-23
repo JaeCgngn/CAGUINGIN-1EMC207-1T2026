@@ -546,7 +546,6 @@ MonoBehaviour:
   m_Agent: {fileID: 6101262279779844676}
   m_PatrolSettings: {fileID: 4394207354388361015}
   m_Vision: {fileID: 0}
-  m_EnemyHearing: {fileID: 0}
 --- !u!114 &4394207354388361015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -601,4 +600,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHearing
   m_HearingRadius: 10
-  m_Brain: {fileID: 0}
+  m_Brain: {fileID: 4555957525113867597}
