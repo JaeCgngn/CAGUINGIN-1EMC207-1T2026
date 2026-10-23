@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class EnemyNoiseTest : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private EnemyBrain m_EnemyBrain;
+    [SerializeField] private EnemyHearing m_EnemyHearing;
     [SerializeField] private Transform m_NoiseSource;
 
     [Header("Testing")]
@@ -24,10 +24,10 @@ public class EnemyNoiseTest : MonoBehaviour
 
     private void TriggerNoise()
     {
-        if (m_EnemyBrain == null)
+        if (m_EnemyHearing == null)
         {
             Debug.LogWarning(
-                "EnemyNoiseTest: Enemy Brain is not assigned.");
+                "EnemyNoiseTest: Enemy Hearing is not assigned.");
             return;
         }
 
@@ -35,7 +35,7 @@ public class EnemyNoiseTest : MonoBehaviour
             ? m_NoiseSource.position
             : transform.position;
 
-        m_EnemyBrain.Alert(noisePosition);
+        m_EnemyHearing.HearNoise(noisePosition);
 
         Debug.Log($"Noise triggered at {noisePosition}");
     }

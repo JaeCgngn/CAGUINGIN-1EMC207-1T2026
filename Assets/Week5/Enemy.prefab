@@ -399,6 +399,7 @@ GameObject:
   - component: {fileID: 4555957525113867597}
   - component: {fileID: 4394207354388361015}
   - component: {fileID: 964645897047683980}
+  - component: {fileID: 6126471174088898832}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -545,6 +546,7 @@ MonoBehaviour:
   m_Agent: {fileID: 6101262279779844676}
   m_PatrolSettings: {fileID: 4394207354388361015}
   m_Vision: {fileID: 0}
+  m_EnemyHearing: {fileID: 0}
 --- !u!114 &4394207354388361015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -586,3 +588,17 @@ MonoBehaviour:
   m_ObstacleMask:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &6126471174088898832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8376461040854287115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90cbb77b04e3b3f4588e3b6f862aeea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHearing
+  m_HearingRadius: 10
+  m_Brain: {fileID: 0}

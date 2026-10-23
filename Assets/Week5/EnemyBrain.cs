@@ -23,6 +23,9 @@ public class EnemyBrain : MonoBehaviour
     [Header("Vision")]
     [SerializeField] private EnemyVision m_Vision;
 
+    [Header("Hearing")]
+    [SerializeField] private EnemyHearing m_EnemyHearing;
+
     private EnemyPatrolRoute m_PatrolRoute;
     private EnemyStateSO m_CurrentState;
 
