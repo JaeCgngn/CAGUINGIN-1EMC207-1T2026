@@ -8,8 +8,8 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private Transform[] m_Waypoints;
 
     [Header("Movement")]
-    [SerializeField] private float m_ArrivalDistance = 0.5f;
-    [SerializeField] private float m_WaitTime = 2f;
+    [SerializeField, Min(0f)] private float m_ArrivalDistance = 0.5f;
+    [SerializeField, Min(0f)] private float m_WaitTime = 2f;
 
     private int m_CurrentWaypointIndex;
     private float m_WaitTimer;
@@ -17,6 +17,14 @@ public class EnemyPatrol : MonoBehaviour
 
     public bool HasWaypoints =>
         m_Waypoints != null && m_Waypoints.Length > 0;
+
+    public void SetWaypoints(Transform[] waypoints)
+    {
+        m_Waypoints = waypoints;
+        m_CurrentWaypointIndex = 0;
+        m_IsWaiting = false;
+        m_WaitTimer = 0f;
+    }
 
     public void BeginPatrol(NavMeshAgent agent)
     {
@@ -43,7 +51,6 @@ public class EnemyPatrol : MonoBehaviour
             if (m_WaitTimer <= 0f)
             {
                 m_IsWaiting = false;
-
                 m_CurrentWaypointIndex =
                     (m_CurrentWaypointIndex + 1) % m_Waypoints.Length;
 

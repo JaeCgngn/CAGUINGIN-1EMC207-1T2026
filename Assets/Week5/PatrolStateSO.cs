@@ -18,20 +18,9 @@ public class PatrolStateSO : EnemyStateSO
 
     public override void Tick(EnemyBrain brain)
     {
-        // if (brain.Target != null)
-        // {
-        //     Vector3 toTarget = brain.Target.position - brain.transform.position;
-        //     if (toTarget.sqrMagnitude <= m_DetectionRadius * m_DetectionRadius 
-        //     //&& IsWithinFieldOfView(brain.transform, toTarget)
-        //     )
-        //     {
-        //         brain.Alert();
-        //         return;
-        //     }
-        // }
-
         if (brain.IsTargetInFOV(brain.Target))
         {
+            brain.UpdateLastKnownPosition();
             brain.Alert();
             return;
         }

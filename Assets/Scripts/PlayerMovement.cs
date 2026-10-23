@@ -2,25 +2,56 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class PlayerMovement : MonoBehaviour
 {
-    private NavMeshAgent agent;
+    [Header("Movement")]
+    [SerializeField, Min(0.1f)] private float m_MoveSpeed = 8f;
+    [SerializeField, Min(0.1f)] private float m_Acceleration = 50f;
+    [SerializeField, Min(0.1f)] private float m_StoppingDistance = 0.05f;
 
-    void Start()
+    [Header("Input")]
+    [SerializeField] private Camera m_Camera;
+    [SerializeField] private LayerMask m_GroundMask = ~0;
+
+    private NavMeshAgent m_Agent;
+
+    private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        m_Agent = GetComponent<NavMeshAgent>();
+
+        if (m_Camera == null)
+            m_Camera = Camera.main;
+
+        m_Agent.speed = m_MoveSpeed;
+        m_Agent.acceleration = m_Acceleration;
+        m_Agent.stoppingDistance = m_StoppingDistance;
+        m_Agent.autoBraking = true;
     }
 
-    void Update()
+    private void Update()
     {
-        if (Mouse.current.rightButton.wasPressedThisFrame)
+        if (Mouse.current == null ||
+            !Mouse.current.rightButton.wasPressedThisFrame)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                agent.SetDestination(hit.point);
-            }
+            return;
         }
+
+        MoveToMousePosition();
+    }
+
+    private void MoveToMousePosition()
+    {
+        if (m_Camera == null)
+            return;
+
+        Ray ray = m_Camera.ScreenPointToRay(
+            Mouse.current.position.ReadValue());
+
+        if (!Physics.Raycast(ray, out RaycastHit hit, 500f, m_GroundMask))
+            return;
+
+        if (m_Agent.isOnNavMesh)
+            m_Agent.SetDestination(hit.point);
     }
 }

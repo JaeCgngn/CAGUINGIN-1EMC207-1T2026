@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88b0f215329946a4f8abe9d707cd8a41, type: 3}
-  m_Name: AttackState
-  m_EditorClassIdentifier: Assembly-CSharp::AttackStateSO
-  m_AttackRange: 2
-  m_AttackDamage: 10
-  m_AttackCooldown: 1.5
+  m_Script: {fileID: 11500000, guid: f39e02245f4f7ce40b7649edf95739a2, type: 3}
+  m_Name: ChaseState
+  m_EditorClassIdentifier: Assembly-CSharp::ChaseStateSO
+  m_ChaseSpeed: 5
+  m_CatchDistance: 1.5

@@ -1,43 +1,90 @@
 
 using UnityEngine;
+using UnityEngine.AI;
 
 [CreateAssetMenu(menuName = "AI/States/Alert")]
 public class AlertStateSO : EnemyStateSO
 {
-    [Header("Alert Settings")]
-    [SerializeField] private float m_AlertRadius = 4f;
-    [SerializeField] private float m_AlertDuration = 2f;
+    [Header("Investigation Settings")]
+    [SerializeField, Min(0f)]
+    private float m_InvestigationDuration = 4f;
+
+    [SerializeField, Min(0.1f)]
+    private float m_InvestigationStoppingDistance = 1f;
 
     public override void Enter(EnemyBrain brain)
     {
         brain.ResetAlertTimer();
+
+        NavMeshAgent agent = brain.Agent;
+        agent.isStopped = false;
+
+        // Use the noise position when available.
+        // Fall back to the last known player position for compatibility.
+        Vector3 destination = brain.HasInvestigationPosition
+            ? brain.InvestigationPosition
+            : brain.LastKnownPosition;
+
+        agent.SetDestination(destination);
     }
 
     public override void Tick(EnemyBrain brain)
     {
-        if (brain.Target == null)
+        NavMeshAgent agent = brain.Agent;
+
+        // Immediately chase when the player is seen.
+        if (brain.IsTargetInFOV(brain.Target))
         {
-            brain.Patrol();
+            brain.UpdateLastKnownPosition();
+            brain.Chase();
             return;
         }
 
-        float distance = Vector3.Distance(
-            brain.transform.position,
-            brain.Target.position);
-
-        if (distance > m_AlertRadius)
-        {
-            brain.Patrol();
+        // Wait until the navigation system finishes calculating its path.
+        if (agent.pathPending)
             return;
+
+        float stoppingDistance = Mathf.Max(
+            m_InvestigationStoppingDistance,
+            agent.stoppingDistance);
+
+        bool reachedDestination;
+
+        if (agent.hasPath)
+        {
+            reachedDestination =
+                agent.remainingDistance <= stoppingDistance;
         }
+        else
+        {
+            // Handles cases where the agent is already at the destination.
+            Vector3 offset = agent.destination - agent.transform.position;
+            offset.y = 0f;
+
+            reachedDestination =
+                offset.sqrMagnitude <= stoppingDistance * stoppingDistance;
+        }
+
+        if (!reachedDestination)
+            return;
+
+        // The enemy has reached the noise location.
+        // Stop and investigate for a short duration.
+        agent.isStopped = true;
 
         brain.IncreaseAlertTimer(Time.deltaTime);
 
-        if (brain.AlertTimer >= m_AlertDuration)
+        if (brain.AlertTimer >= m_InvestigationDuration)
         {
-            brain.Attack();
+            brain.Patrol();
         }
     }
 
-    public override void Exit(EnemyBrain brain) { }
+    public override void Exit(EnemyBrain brain)
+    {
+        NavMeshAgent agent = brain.Agent;
+
+        agent.isStopped = false;
+        agent.ResetPath();
+    }
 }
